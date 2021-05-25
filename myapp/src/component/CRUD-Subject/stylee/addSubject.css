@@ -1,0 +1,18 @@
+.submit-form{
+    width: 100%;
+    margin: 0 auto;
+    background-color:white;
+    padding: 20px 10px 20px 20px;
+    border-radius: 10px;
+}
+.form-control{
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+.col-xs-6 {
+    margin: 0 auto;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+Input{
+    border: 1px solid black;
+    border-radius: 5px;
+}
