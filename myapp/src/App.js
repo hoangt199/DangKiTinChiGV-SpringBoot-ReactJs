@@ -60,7 +60,7 @@ const App = () => {
           {showAdminBoard && (
             <li className="nav-item">
               <Link to={"/add-subject"} className="nav-link">
-                  Thêm môn học
+                  Quản lý lớp học phần
               </Link>
             </li>
           )}
