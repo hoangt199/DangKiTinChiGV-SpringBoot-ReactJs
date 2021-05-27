@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import {Input ,Select,Descriptions} from "antd";
 import "antd/dist/antd.css";
 import UserService from "../service/user.service";
-import TableResult from './TableSelect/TableResult'
 import TableSelectTKB from '../component/TableSelect/TableSelectTKB'
 const User = () => {
   const [content, setContent] = useState("");
@@ -71,10 +70,9 @@ const { Search } = Input;
         <br/>
         <label>Xem đăng kí</label>
         <br/>
-        <TableResult/>
       </body>
       <div>
-          <footer style = {{backgroundColor : "" , width : "100%",paddingBottom : "10px"}}>
+          <footer style = {{backgroundColor : "" , width : "100%",paddingBottom : "10px",marginTop : "100%"}}>
               <Descriptions title="Về chúng tôi" layout="vertical">
             <Descriptions.Item label="Trường">Học Viện Công Nghệ Bưu Chính Viễn Thông</Descriptions.Item>
             <Descriptions.Item label="Hotline">1810000000</Descriptions.Item>

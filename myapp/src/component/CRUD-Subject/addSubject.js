@@ -19,7 +19,15 @@ function onSearch(val) {
 function onSearchDayOfWeek(val) {
   console.log('search:', val);
 }
-
+function  required(value){
+  if (!value) {
+    return (
+      <div className="alert alert-danger" role="alert">
+          Không được để trống trường này!
+      </div>
+    );
+  }
+};
 export default class addSubject extends Component {
 
   constructor(props) {
@@ -67,11 +75,20 @@ export default class addSubject extends Component {
         weekdays : this.state.weekdays,
         mathematics_code : this.state.mathematicCode
       }
-      userSevice.create(newSubject).then( res =>{
+      if(newSubject.name_subject.length == 0 || newSubject.specialized.length == 0 || newSubject.weekdays.length==0 || newSubject.mathematics_code.length == 0 || newSubject.room.length == 0){
+        this.setState({
+          submitted : false
+        })
+        message.warning("Không được để trống các trường!")
+      }else{
+        userSevice.create(newSubject).then( res =>{
           this.setState({
             submitted:true
           })
+          // message.success("Tạo môn học mới thành công!")
       });
+      }
+   
   }
   onChangeRoom(value) {
     console.log(`selected ${value}`);
@@ -92,15 +109,7 @@ export default class addSubject extends Component {
     weekdays  : value
   });
 }
- required = (value) => {
-  if (!value) {
-    return (
-      <div className="alert alert-danger" role="alert">
-          Không được để trống trường này!
-      </div>
-    );
-  }
-};
+
  onChangeKip(value) {
   console.log(`selected ${ value}`);
   this.setState({
@@ -149,7 +158,7 @@ export default class addSubject extends Component {
                         placeholder="Tên môn học"
                         onChange = {this.onChangeName}
                           style = {{borderRadius : "5px"}}
-                          validations={[this.required()]}
+                          validations={[required]}
                         />
                     </div>
                     <div className="form-group">
@@ -168,7 +177,7 @@ export default class addSubject extends Component {
                             filterOption={(input, option) =>
                               option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
                             }
-                            validations={[this.required()]}
+                            validations={[required]}
                           >
                             <Option value="CNPM">CNPM</Option>
                             <Option value="HTTT">HTTT</Option>
@@ -190,7 +199,7 @@ export default class addSubject extends Component {
                             filterOption={(input, option) =>
                               option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
                             }
-                            validations={[this.required()]}
+                            validations={[required]}
                           >
                             <Option value="101 - A2">101 - A2</Option>
                             <Option value="201 - A2">201 - A2</Option>
@@ -217,7 +226,7 @@ export default class addSubject extends Component {
                             filterOption={(input, option) =>
                               option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
                             }
-                            validations={[this.required()]}
+                            validations={[required]}
                           >
                             <Option value="Thứ 2">Thứ 2</Option>
                             <Option value="Thứ 3">Thứ 3</Option>
@@ -243,7 +252,8 @@ export default class addSubject extends Component {
                             filterOption={(input, option) =>
                               option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
                             }
-                            validations={[this.required()]}>
+                            required
+                            validations={[required]}>
                             <Option value="7h - 8h50">7h - 8h50</Option>
                             <Option value="9h - 10h50">9h - 10h50</Option>
                             <Option value="12h - 13h50">12h - 13h50</Option>

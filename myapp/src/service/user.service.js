@@ -1,5 +1,7 @@
 import axios from "axios";
+import { data } from "jquery";
 import authHeader from "./auth-header";
+import authService from "./auth.service";
 const API_URL = "http://localhost:8080/api/home/";
 const API_URL_SUBJECT = "http://localhost:8080/api/home/";
 
@@ -37,8 +39,14 @@ const update=(id, data) => {
 const deleteSub = (id) => {
   return axios.delete(API_URL_SUBJECT + `delete-subject/${id}`,{headers : authHeader()});
 }
-const createRegister = (data) =>{
-  return axios.post(API_URL_SUBJECT +"create-register", data, {headers : authHeader() });
+const createRegisterSubject = (subject) =>{
+  return axios.post(API_URL_SUBJECT +"create-register",subject, {headers : authHeader() });
+}
+const getAllSubjectofRegister = (userame) =>{
+  return axios.get(API_URL_SUBJECT +"get-all-register", {headers : authHeader() });
+}
+const deleteRegister = (id) => {
+  return axios.delete(API_URL_SUBJECT + `delete-subject-of-register/${id}`,{headers : authHeader()});
 }
 const deleteAll = () => {
   return axios.delete(`delete-all-subject`);
@@ -49,10 +57,12 @@ export default {
   getModeratorBoard,
   getAdminBoard,
   get,
+  getAllSubjectofRegister,
   getAll,
   update,
   deleteSub,
   deleteAll,
   create,
-  createRegister
+  createRegisterSubject,
+  deleteRegister
 };

@@ -52,7 +52,7 @@ const BoardAdmin = () => {
         </div>
       </div>
       <div>
-          <footer style = {{backgroundColor : "" , width : "100%",paddingTop : "100px"}}>
+          <footer style = {{backgroundColor : "" , width : "100%",marginTop : "300px"}}>
               <Descriptions title="Về chúng tôi" layout="vertical">
             <Descriptions.Item label="Trường">Học Viện Công Nghệ Bưu Chính Viễn Thông</Descriptions.Item>
             <Descriptions.Item label="Hotline">1810000000</Descriptions.Item>
