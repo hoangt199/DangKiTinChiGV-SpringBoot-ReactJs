@@ -31,7 +31,8 @@ export default class TableSelectTKB extends Component {
       mathematicCode: "",
       weekdays: "",
       modalVisible: false,
-      modalVisibleDelete :false
+      modalVisibleDelete :false,
+      
     };
   }
 
@@ -97,9 +98,16 @@ export default class TableSelectTKB extends Component {
   }
   onRegister = (subject) => {
     console.log(subject);
-    userService.createRegisterSubject(subject).then(res => {
-      message.success("Đăng kí môn giảng dạy thành công!");
-    })
+    const user = authService.getCurrentUser();
+    console.log(user.username)
+    if(user.username == "Admin"){
+        message.warning("Admin không thể đăng kí môn giảng dạy!")
+    }else{
+      userService.createRegisterSubject(subject).then(res => {
+        message.success("Đăng kí môn giảng dạy thành công!");
+      })
+    }
+   
   }
   setModalVisibleDelete1 = (modalVisibleDelete,id)=>{
     console.log(id);
