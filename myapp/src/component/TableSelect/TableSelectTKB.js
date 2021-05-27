@@ -7,6 +7,7 @@ import { render } from '@testing-library/react';
 import authService from '../../service/auth.service';
 
 // rowSelection object indicates the need for row selection
+const user = authService.getCurrentUser();
 
 export default class TableSelectTKB extends Component {
 
@@ -32,7 +33,7 @@ export default class TableSelectTKB extends Component {
       weekdays: "",
       modalVisible: false,
       modalVisibleDelete :false,
-      
+      username : user.username
     };
   }
 
@@ -50,12 +51,20 @@ export default class TableSelectTKB extends Component {
     });
   }
   onView = () => {
-    userService.getAllSubjectofRegister().then(res => {
-      console.log(res.data)
-      this.setState({
-        all : res.data
+    const user = authService.getCurrentUser();
+    let username = user.username;
+    console.log(username)
+    if(username != "Admin"){
+      userService.getAllSubjectofRegister().then(res => {
+        console.log(res.data)
+        this.setState({
+          all : res.data
+        })
       })
-    })
+    }else{
+      message.warn("Admin không có bản đăng kí nào!")
+    }
+   
   }
   onChangeName(e) {
     console.log(`selected ${e.target.value}`);
@@ -114,9 +123,16 @@ export default class TableSelectTKB extends Component {
     this.setState({
       modalVisibleDelete : modalVisibleDelete
     })
-    userService.deleteRegister(id).then(res=>{
-      message.success("Hủy đăng kí thành công!")
-    })
+    const user = authService.getCurrentUser();
+    console.log(user.username)
+    if(user.username == "Admin"){
+        message.warning("Admin không thể đăng kí môn giảng dạy!")
+    }else{
+      userService.deleteRegister(id).then(res=>{
+        message.success("Hủy đăng kí thành công!")
+      })
+    }
+
     window.location.reload();
   }
   setModalVisibleDelete = (modalVisibleDelete)=>{
@@ -233,6 +249,7 @@ export default class TableSelectTKB extends Component {
                 <th>Chuyên ngành</th>
                 <th>Thứ</th>
                 <th>Kíp học</th>
+                <th>Tên giảng viên</th>
               </tr>
             </thead>
             <tbody >
@@ -262,6 +279,7 @@ export default class TableSelectTKB extends Component {
                     <td>{subject.specialized}</td>
                     <td>{subject.weekdays}</td>
                     <td>{subject.mathematics_code}</td>
+                    <td>{this.state.username}</td>
                   </tr>
               )}
             </tbody>
