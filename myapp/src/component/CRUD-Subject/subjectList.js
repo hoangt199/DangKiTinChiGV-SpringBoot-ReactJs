@@ -163,14 +163,29 @@ export default class subjectList extends Component {
       mathematics_code: this.state.mathematicCode
     }
     console.log(subjectNew)
-    userService.update(id, subjectNew).then(res => {
-      {
-        console.log(res.data)
-      }
-    })
-    message.success("Sửa đổi thành công!")
-    setTimeout(5000);
-    window.location.reload();
+    if(subjectNew.name_subject.length == 0  
+      || subjectNew.specialized.length == 0
+     || subjectNew.weekdays.length == 0
+     ||subjectNew.mathematics_code.length == 0
+     ||subjectNew.room.length == 0){
+       message.warning("Không được để trống thông tin các trường!")
+       this.setState({
+         modalVisibleEdit : true
+       })
+     }else{
+      userService.update(id, subjectNew).then(res => {
+        {
+          console.log(res.data)
+        }
+      })
+      this.setState({
+        modalVisibleEdit : false
+      })
+      message.success("Sửa đổi thành công!")
+      setTimeout(5000);
+      window.location.reload();
+     }
+   
   }
   setModalVisibleEdit = (modalVisible) => {
     this.setState({ modalVisibleEdit: modalVisible })

@@ -35,7 +35,7 @@ const Moderator = () => {
             <Descriptions.Item label="Hotline">1810000000</Descriptions.Item>
             <Descriptions.Item label="Địa chỉ">Số xx Trần Phú,Hà Đông</Descriptions.Item>
             <Descriptions.Item label="Address" span={2}>
-              No. 18, Wantang Road, Xihu District, Hangzhou, Zhejiang, China
+                 Liên hệ chúng tôi
             </Descriptions.Item>
             <Descriptions.Item label="Remark">empty</Descriptions.Item>
           </Descriptions>

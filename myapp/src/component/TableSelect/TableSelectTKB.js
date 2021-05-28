@@ -33,7 +33,8 @@ export default class TableSelectTKB extends Component {
       weekdays: "",
       modalVisible: false,
       modalVisibleDelete :false,
-      username : user.username
+      username : user.username,
+      size : 0,
     };
   }
 
@@ -58,7 +59,7 @@ export default class TableSelectTKB extends Component {
       userService.getAllSubjectofRegister().then(res => {
         console.log(res.data)
         this.setState({
-          all : res.data
+          all : res.data,
         })
       })
     }else{
@@ -130,10 +131,10 @@ export default class TableSelectTKB extends Component {
     }else{
       userService.deleteRegister(id).then(res=>{
         message.success("Hủy đăng kí thành công!")
+        setTimeout("5000")
       })
     }
-
-    window.location.reload();
+    window.location.reload(3000);
   }
   setModalVisibleDelete = (modalVisibleDelete)=>{
     this.setState({
@@ -284,6 +285,7 @@ export default class TableSelectTKB extends Component {
               )}
             </tbody>
           </table>
+          <span>Tổng số môn đăng kí : {j-1}</span>
         </div>
 </div>
 </div>

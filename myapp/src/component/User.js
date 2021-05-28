@@ -68,17 +68,16 @@ const { Search } = Input;
         <strong>Các môn trong kì</strong>
         <TableSelectTKB/>
         <br/>
-        <label>Xem đăng kí</label>
         <br/>
       </body>
-      <div>
-          <footer style = {{backgroundColor : "" , width : "100%",paddingBottom : "10px",marginTop : "100%"}}>
+      <div >
+          <footer  style = {{backgroundColor : "" , width : "100%",paddingBottom : "10px",marginTop : "10%"}}>
               <Descriptions title="Về chúng tôi" layout="vertical">
             <Descriptions.Item label="Trường">Học Viện Công Nghệ Bưu Chính Viễn Thông</Descriptions.Item>
             <Descriptions.Item label="Hotline">1810000000</Descriptions.Item>
             <Descriptions.Item label="Địa chỉ">Số xx Trần Phú,Hà Đông</Descriptions.Item>
             <Descriptions.Item label="Address" span={2}>
-              No. 18, Wantang Road, Xihu District, Hangzhou, Zhejiang, China
+              Liên hệ chúng tôi : 
             </Descriptions.Item>
             <Descriptions.Item label="Remark">empty</Descriptions.Item>
           </Descriptions>
