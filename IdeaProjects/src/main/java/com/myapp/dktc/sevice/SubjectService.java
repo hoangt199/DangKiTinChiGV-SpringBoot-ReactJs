@@ -1,20 +1,19 @@
 package com.myapp.dktc.sevice;
 
 import com.myapp.dktc.entity.Subject;
-import org.bson.types.ObjectId;
 
 import java.util.List;
 
 public interface SubjectService {
-    Subject createSubject(Subject subject);
+    String createSubject(Subject subject) throws Exception;
 
     List<Subject> getAllSubject();
 
-    Subject updateSubject(Subject subject, ObjectId id);
+    Subject updateSubject(Subject subject, String id);
 
-    void deleteSubject(ObjectId id);
+    void deleteSubject(String id);
 
     List<Subject> getSubjectBySpecilized(String specilized);
 
-    Subject getByid(ObjectId id);
+    Subject getByid(String id);
 }

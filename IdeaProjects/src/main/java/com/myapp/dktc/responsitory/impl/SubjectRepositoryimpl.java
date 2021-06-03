@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -20,7 +21,7 @@ public class SubjectRepositoryimpl implements SubjectRepository {
 
     @Override
     public Subject save(Subject subject) {
-        return mongoTemplate.insert(subject);
+        return mongoTemplate.save(subject);
     }
 
     @Override
@@ -29,19 +30,24 @@ public class SubjectRepositoryimpl implements SubjectRepository {
     }
 
     @Override
-    public Subject updateSubject(Subject subject, ObjectId id) {
+    public Subject updateSubject(Subject subject, String id) {
         Query query = new Query();
-        query.addCriteria(Criteria.where("id").is(id));
+        query.addCriteria(Criteria.where("id").is(new ObjectId(id)));
         Subject subjectOld = mongoTemplate.findOne(query,Subject.class);
-        subject.setNameSubject(subjectOld.getNameSubject());
-        subject.setRoom(subjectOld.getRoom());
-        subject.setSpecialized(subjectOld.getSpecialized());
-        subject.setWeekdays(subjectOld.getWeekdays());
-        return mongoTemplate.save(subject);
+        mongoTemplate.remove(subjectOld);
+        Subject subject1 = new Subject();
+        subject1.setId(id);
+        subject1.setNameSubject(subject.getNameSubject());
+        subject1.setRoom(subject.getRoom());
+        subject1.setSpecialized(subject.getSpecialized());
+        subject1.setWeekdays(subject.getWeekdays());
+        subject1.setMathematicCode(subject.getMathematicCode());
+        subject1.setModifiedDate(new Date());
+        return mongoTemplate.save(subject1);
     }
 
     @Override
-    public void deleteSubject(ObjectId id) {
+    public void deleteSubject(String id) {
         Query query = new Query();
         query.addCriteria(Criteria.where("id").is(id));
         Subject subject = mongoTemplate.findOne(query,Subject.class);
@@ -59,8 +65,10 @@ public class SubjectRepositoryimpl implements SubjectRepository {
     }
 
     @Override
-    public Subject findById(ObjectId id) {
-        return mongoTemplate.findById(id,Subject.class);
+    public Subject findById(String id) {
+       Query query = new Query();
+       query.addCriteria(Criteria.where("id").is(new ObjectId(id)));
+        return mongoTemplate.findOne(query,Subject.class);
     }
 
     @Override

@@ -1,6 +1,6 @@
 package com.myapp.dktc.security.jwt;
 
-import com.myapp.dktc.sevice.UserDetailsImpl;
+import com.myapp.dktc.sevice.impl.UserDetailsImpl;
 import io.jsonwebtoken.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

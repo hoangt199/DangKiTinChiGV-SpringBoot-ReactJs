@@ -1,6 +1,6 @@
 package com.myapp.dktc.security.jwt;
 
-import com.myapp.dktc.sevice.UserDetailsSeviceImpl;
+import com.myapp.dktc.sevice.impl.UserDetailsSeviceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

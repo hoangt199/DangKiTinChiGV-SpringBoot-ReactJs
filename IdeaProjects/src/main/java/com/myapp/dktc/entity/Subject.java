@@ -5,20 +5,23 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import java.util.Date;
 
 @Document(collection = "subject")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
+@NotNull
 public class Subject {
     @Id
-    private ObjectId id;
+    @JsonProperty("id")
+    private String id;
 
     @JsonProperty("name_subject")
     @NotBlank
@@ -35,5 +38,8 @@ public class Subject {
 
     @JsonProperty("mathematics_code") //kíp học
     private String mathematicCode;
+
+    @JsonProperty("last_modified_date")
+    private Date modifiedDate;
 
 }

@@ -2,7 +2,6 @@ package com.myapp.dktc.responsitory;
 
 import com.myapp.dktc.entity.Subject;
 import com.myapp.dktc.entity.User;
-import org.bson.types.ObjectId;
 
 import java.util.List;
 
@@ -12,13 +11,13 @@ public interface SubjectRepository {
 
     List<Subject> findAllSubject();
 
-    Subject updateSubject(Subject subject, ObjectId id);
+    Subject updateSubject(Subject subject, String id);
 
-    void deleteSubject(ObjectId id);
+    void deleteSubject(String id);
 
     List<Subject> finSubjectBySpecilized(String specilized);
 
-    Subject findById(ObjectId id);
+    Subject findById(String id);
 
     User findByUsername(String logUsename);
 
