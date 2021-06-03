@@ -62,6 +62,7 @@ export default class TableSelectTKB extends Component {
           all : res.data,
         })
       })
+      console.log(this.state.all);
     }else{
       message.warn("Admin không có bản đăng kí nào!")
     }
