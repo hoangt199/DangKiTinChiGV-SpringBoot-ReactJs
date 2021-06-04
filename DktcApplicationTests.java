@@ -1,19 +1,16 @@
 package com.myapp.dktc;
 
+import com.myapp.dktc.entity.Mathematics;
 import com.myapp.dktc.entity.Subject;
+import com.myapp.dktc.sevice.MathematicService;
 import com.myapp.dktc.sevice.SubjectService;
-import org.bson.types.ObjectId;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Bean;
-import org.springframework.data.mongodb.MongoDbFactory;
-import org.springframework.data.mongodb.MongoTransactionManager;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -29,6 +26,9 @@ public class DktcApplicationTests {
     @Autowired
     private SubjectService subjectService;
 
+    @Autowired
+    private MathematicService mathematicService;
+
     @Test
     public void contextLoads() {
     }
@@ -42,7 +42,7 @@ public class DktcApplicationTests {
 
     @Test
     public void testGetOne() {
-        Subject s = subjectService.getByid(new ObjectId("60aa80d7d8e62a150e444267"));
+        Subject s = subjectService.getByid("60aa80d7d8e62a150e444267");
         System.out.println(s);
         Assert.assertNotNull(s);
     }
@@ -77,17 +77,17 @@ public class DktcApplicationTests {
 
     @Test
     @Rollback
-    public void testCreateSubjectSuccess() {
+    public void testCreateSubjectSuccess() throws Exception {
         Long beforeCreate = Long.valueOf(subjectService.getAllSubject().size());
         Subject s = new Subject();
         s.setRoom("401 - A2");
         s.setSpecialized("CNPM");
         s.setWeekdays("Thu5");
         s.setMathematicCode("9h - 10h50");
-        Subject result = subjectService.createSubject(s);
+        String result = subjectService.createSubject(s);
 
         Long afterCrate = Long.valueOf(subjectService.getAllSubject().size());
-        Long beforeCreate1 = beforeCreate +1;
+        Long beforeCreate1 = beforeCreate + 1;
         assertEquals(beforeCreate1, afterCrate);
 
         Subject checkDb = subjectService.getByid(s.getId());
@@ -99,12 +99,12 @@ public class DktcApplicationTests {
 
     @Test
     @Rollback
-    public void testDeleteSubject() {
-        Subject bfDelete = subjectService.getByid(new ObjectId("60b8eb215ae7a91a946af875"));
+    public void testDeleteSubject() throws Exception {
+        Subject bfDelete = subjectService.getByid("60b8eb215ae7a91a946af875");
         assertNotNull(bfDelete);
 
-        subjectService.deleteSubject(new ObjectId("60b8eb215ae7a91a946af875"));
-        Subject afDelete = subjectService.getByid(new ObjectId("60b8eb215ae7a91a946af875"));
+        subjectService.deleteSubject("60b8eb215ae7a91a946af875");
+        Subject afDelete = subjectService.getByid("60b8eb215ae7a91a946af875");
         assertNull(afDelete);
 
         subjectService.createSubject(bfDelete);
@@ -113,34 +113,31 @@ public class DktcApplicationTests {
     @Test
     @Rollback
     public void testUpdateSubject() {
-//        Subject bfUpdate = subjectService.getByid(new ObjectId("60b8eb215ae7a91a946af875"));
-//        int check =1;
-//        if(!bfUpdate.getSpecialized().equals("CNPM") || !bfUpdate.getRoom().equals("401 - A2")
-//                || !bfUpdate.getWeekdays().equals("Thu5")){
-//            check = 0;
-//        }
-//        assertEquals(Long.valueOf(check), Long.valueOf(1));
-//        assertNotNull(bfUpdate);
-
-        Subject update = new Subject();
-        update.setWeekdays("Thu4");
-        update.setRoom("301 - A2");
-        update.setSpecialized("HTTT");
+        Subject bfUpdate = subjectService.getByid("60b8eb215ae7a91a946af875");
+        int check =1;
+        if(!bfUpdate.getSpecialized().equals("HTTT") || !bfUpdate.getRoom().equals("301 - A2") || !bfUpdate.getWeekdays().equals("Thu4"))
+            check = 0;
+        assertEquals(Long.valueOf(check), Long.valueOf(1));
+        assertNotNull(bfUpdate);
+        Subject update = new Subject();update.setWeekdays("Thu5");
+        update.setRoom("401 - A2");
+        update.setSpecialized("CNPM");
         update.setMathematicCode("9h - 10h50");
-        subjectService.updateSubject(update, new ObjectId("60b8eb215ae7a91a946af875"));
-//        Subject afUpdate = subjectService.getByid(new ObjectId("60b8eb215ae7a91a946af875"));
-//        int check2 =1;
-//        if(!afUpdate.getSpecialized().equals("HTTT") || !afUpdate.getRoom().equals("301 - A2")
-//                || !afUpdate.getWeekdays().equals("Thu4")){
-//            check2 = 0;
-//        }
-//        assertEquals(Long.valueOf(check2), Long.valueOf(1));
-//
-//        //hủy thay đổi trong db
-//        subjectService.updateSubject(bfUpdate, new ObjectId("60b8eb215ae7a91a946af875"));
+        subjectService.updateSubject(update, "60b8eb215ae7a91a946af875");
+        Subject afUpdate = subjectService.getByid("60b8eb215ae7a91a946af875");
+        int check2 =1;
+        if(!afUpdate.getSpecialized().equals("CNPM") || !afUpdate.getRoom().equals("401 - A2") || !afUpdate.getWeekdays().equals("Thu5"))
+            check2 = 0;
+        assertEquals(Long.valueOf(check2), Long.valueOf(1));
+        //hủy thay đổi trong db
+        subjectService.updateSubject(bfUpdate, "60b8eb215ae7a91a946af875");
 
     }
 
-
-
+    @Test
+    public void testGetListMethemetics() {
+        List<Mathematics> listAll = mathematicService.getAllMathematic();
+        System.out.println(listAll);
+        assertNotNull(listAll);
+    }
 }
