@@ -23,121 +23,135 @@ import static org.junit.Assert.assertNull;
 public class DktcApplicationTests {
 
 
-    @Autowired
-    private SubjectService subjectService;
+	@Autowired
+	private SubjectService subjectService;
 
-    @Autowired
-    private MathematicService mathematicService;
+	@Autowired
+	private MathematicService mathematicService;
 
-    @Test
-    public void contextLoads() {
-    }
+	@Test
+	public void contextLoads() throws Exception {
+		Long beforeCreate = Long.valueOf(subjectService.getAllSubject().size());
+		Subject s = new Subject();
+		s.setNameSubject("PTTK");
+		s.setRoom("301 - A2");
+		s.setSpecialized("HTTT");
+		s.setWeekdays("Thu4");
+		s.setMathematicCode("16h - 17h50");
+		String result = subjectService.createSubject(s);
 
-    @Test
-    public void testGetListSubject() {
-        List<Subject> listAll = subjectService.getAllSubject();
-        System.out.println(listAll);
-        assertNotNull(listAll);
-    }
+		Long afterCrate = Long.valueOf(subjectService.getAllSubject().size());
+		assertEquals(beforeCreate, afterCrate);
 
-    @Test
-    public void testGetOne() {
-        Subject s = subjectService.getByid("60aa80d7d8e62a150e444267");
-        System.out.println(s);
-        Assert.assertNotNull(s);
-    }
+		int check = result.equals("Phòng đã có môn học khác đăng kí!") ? 1 : 0;
+		assertEquals(Long.valueOf(check), Long.valueOf(1));
+	}
 
-    @Test
-    public void testGetSubjectSpecializeCNPM() {
-        List<Subject> list = subjectService.getSubjectBySpecilized("CNPM");
-        Long expect = Long.valueOf(1);
-        for (Subject subject : list) {
-            if (!subject.getSpecialized().equals("CNPM")) {
-                expect = Long.valueOf(0);
-                break;
-            }
-        }
-        assertEquals(expect, Long.valueOf(1));
-        assertNotNull(list);
-    }
+	@Test
+	public void testGetListSubject() {
+		List<Subject> listAll = subjectService.getAllSubject();
+		System.out.println(listAll);
+		assertNotNull(listAll);
+	}
 
-    @Test
-    public void testGetSubjectSpecializeHTTT() {
-        List<Subject> list = subjectService.getSubjectBySpecilized("HTTT");
-        Long expect = Long.valueOf(1);
-        for (Subject subject : list) {
-            if (!subject.getSpecialized().equals("HTTT")) {
-                expect = Long.valueOf(0);
-                break;
-            }
-        }
-        assertEquals(expect, Long.valueOf(1));
-        assertNotNull(list);
-    }
+	@Test
+	public void testGetOne() {
+		Subject s = subjectService.getByid("60aa80d7d8e62a150e444267");
+		System.out.println(s);
+		Assert.assertNotNull(s);
+	}
 
-    @Test
-    @Rollback
-    public void testCreateSubjectSuccess() throws Exception {
-        Long beforeCreate = Long.valueOf(subjectService.getAllSubject().size());
-        Subject s = new Subject();
-        s.setRoom("401 - A2");
-        s.setSpecialized("CNPM");
-        s.setWeekdays("Thu5");
-        s.setMathematicCode("9h - 10h50");
-        String result = subjectService.createSubject(s);
+	@Test
+	public void testGetSubjectSpecializeCNPM() {
+		List<Subject> list = subjectService.getSubjectBySpecilized("CNPM");
+		Long expect = Long.valueOf(1);
+		for (Subject subject : list) {
+			if (!subject.getSpecialized().equals("CNPM")) {
+				expect = Long.valueOf(0);
+				break;
+			}
+		}
+		assertEquals(expect, Long.valueOf(1));
+		assertNotNull(list);
+	}
 
-        Long afterCrate = Long.valueOf(subjectService.getAllSubject().size());
-        Long beforeCreate1 = beforeCreate + 1;
-        assertEquals(beforeCreate1, afterCrate);
+	@Test
+	public void testGetSubjectSpecializeHTTT() {
+		List<Subject> list = subjectService.getSubjectBySpecilized("HTTT");
+		Long expect = Long.valueOf(1);
+		for (Subject subject : list) {
+			if (!subject.getSpecialized().equals("HTTT")) {
+				expect = Long.valueOf(0);
+				break;
+			}
+		}
+		assertEquals(expect, Long.valueOf(1));
+		assertNotNull(list);
+	}
 
-        Subject checkDb = subjectService.getByid(s.getId());
-        assertNotNull(checkDb);
-        assertNotNull(result);
+	@Test
+	@Rollback
+	public void testCreateSubjectSuccess() throws Exception {
+		Long beforeCreate = Long.valueOf(subjectService.getAllSubject().size());
+		Subject s = new Subject();
+		s.setRoom("401 - A2");
+		s.setSpecialized("CNPM");
+		s.setWeekdays("Thu5");
+		s.setMathematicCode("9h - 10h50");
+		String result = subjectService.createSubject(s);
 
-        subjectService.deleteSubject(s.getId());
-    }
+		Long afterCrate = Long.valueOf(subjectService.getAllSubject().size());
+		Long beforeCreate1 = beforeCreate + 1;
+		assertEquals(beforeCreate1, afterCrate);
 
-    @Test
-    @Rollback
-    public void testDeleteSubject() throws Exception {
-        Subject bfDelete = subjectService.getByid("60b8eb215ae7a91a946af875");
-        assertNotNull(bfDelete);
+		Subject checkDb = subjectService.getByid(s.getId());
+		assertNotNull(checkDb);
+		assertNotNull(result);
 
-        subjectService.deleteSubject("60b8eb215ae7a91a946af875");
-        Subject afDelete = subjectService.getByid("60b8eb215ae7a91a946af875");
-        assertNull(afDelete);
+		subjectService.deleteSubject(s.getId());
+	}
 
-        subjectService.createSubject(bfDelete);
-    }
+	@Test
+	@Rollback
+	public void testDeleteSubject() throws Exception {
+		Subject bfDelete = subjectService.getByid("60b9b2f57931481eee357d9b");
+		assertNotNull(bfDelete);
 
-    @Test
-    @Rollback
-    public void testUpdateSubject() {
-        Subject bfUpdate = subjectService.getByid("60b8eb215ae7a91a946af875");
-        int check =1;
-        if(!bfUpdate.getSpecialized().equals("HTTT") || !bfUpdate.getRoom().equals("301 - A2") || !bfUpdate.getWeekdays().equals("Thu4"))
-            check = 0;
-        assertEquals(Long.valueOf(check), Long.valueOf(1));
-        assertNotNull(bfUpdate);
-        Subject update = new Subject();update.setWeekdays("Thu5");
-        update.setRoom("401 - A2");
-        update.setSpecialized("CNPM");
-        update.setMathematicCode("9h - 10h50");
-        subjectService.updateSubject(update, "60b8eb215ae7a91a946af875");
-        Subject afUpdate = subjectService.getByid("60b8eb215ae7a91a946af875");
-        int check2 =1;
-        if(!afUpdate.getSpecialized().equals("CNPM") || !afUpdate.getRoom().equals("401 - A2") || !afUpdate.getWeekdays().equals("Thu5"))
-            check2 = 0;
-        assertEquals(Long.valueOf(check2), Long.valueOf(1));
-        //hủy thay đổi trong db
-        subjectService.updateSubject(bfUpdate, "60b8eb215ae7a91a946af875");
+		subjectService.deleteSubject("60b9b2f57931481eee357d9b");
+		Subject afDelete = subjectService.getByid("60b9b2f57931481eee357d9b");
+		assertNull(afDelete);
 
-    }
+		subjectService.createSubject(bfDelete);
+	}
 
-    @Test
-    public void testGetListMethemetics() {
-        List<Mathematics> listAll = mathematicService.getAllMathematic();
-        System.out.println(listAll);
-        assertNotNull(listAll);
-    }
+	@Test
+	@Rollback
+	public void testUpdateSubject() {
+		Subject bfUpdate = subjectService.getByid("60b8ea860400ee664268788b");
+		int check =1;
+		if(!bfUpdate.getSpecialized().equals("HTTT") || !bfUpdate.getRoom().equals("301 - A2") || !bfUpdate.getWeekdays().equals("Thu4"))
+			check = 0;
+		assertEquals(Long.valueOf(check), Long.valueOf(1));
+		assertNotNull(bfUpdate);
+		Subject update = new Subject();update.setWeekdays("Thu5");
+		update.setRoom("401 - A2");
+		update.setSpecialized("CNPM");
+		update.setMathematicCode("9h - 10h50");
+		subjectService.updateSubject(update, "60b8ea860400ee664268788b");
+		Subject afUpdate = subjectService.getByid("60b8ea860400ee664268788b");
+		int check2 =1;
+		if(!afUpdate.getSpecialized().equals("CNPM") || !afUpdate.getRoom().equals("401 - A2") || !afUpdate.getWeekdays().equals("Thu5"))
+			check2 = 0;
+		assertEquals(Long.valueOf(check2), Long.valueOf(1));
+		//hủy thay đổi trong db
+		subjectService.updateSubject(bfUpdate, "60b8ea860400ee664268788b");
+
+	}
+
+	@Test
+	public void testGetListMethemetics() {
+		List<Mathematics> listAll = mathematicService.getAllMathematic();
+		System.out.println(listAll);
+		assertNotNull(listAll);
+	}
 }

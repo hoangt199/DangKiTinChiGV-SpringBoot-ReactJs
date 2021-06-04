@@ -143,7 +143,6 @@ export default class subjectList extends Component {
         mathematicCode: subjectOld.mathematics_code
       })
 
-
     })
 
     this.setState({
@@ -175,13 +174,13 @@ export default class subjectList extends Component {
      }else{
       userService.update(id, subjectNew).then(res => {
         {
-          console.log(res.data)
+          message.info(res.data)
         }
       })
       this.setState({
         modalVisibleEdit : false
       })
-      message.success("Sửa đổi thành công!")
+      // message.success("Sửa đổi thành công!")
       setTimeout(5000);
       window.location.reload();
      }
