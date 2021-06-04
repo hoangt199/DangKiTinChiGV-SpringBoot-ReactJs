@@ -11,7 +11,7 @@ public interface SubjectRepository {
 
     List<Subject> findAllSubject();
 
-    Subject updateSubject(Subject subject, String id);
+    String updateSubject(Subject subject, String id);
 
     void deleteSubject(String id);
 

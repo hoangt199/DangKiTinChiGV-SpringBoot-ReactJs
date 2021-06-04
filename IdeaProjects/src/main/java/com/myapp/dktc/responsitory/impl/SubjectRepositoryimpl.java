@@ -30,20 +30,23 @@ public class SubjectRepositoryimpl implements SubjectRepository {
     }
 
     @Override
-    public Subject updateSubject(Subject subject, String id) {
+    public String updateSubject(Subject subject, String id) {
+        String message = "";
         Query query = new Query();
         query.addCriteria(Criteria.where("id").is(new ObjectId(id)));
         Subject subjectOld = mongoTemplate.findOne(query,Subject.class);
         mongoTemplate.remove(subjectOld);
         Subject subject1 = new Subject();
-        subject1.setId(id);
+        subject1.setId(subject.getId());
         subject1.setNameSubject(subject.getNameSubject());
         subject1.setRoom(subject.getRoom());
         subject1.setSpecialized(subject.getSpecialized());
         subject1.setWeekdays(subject.getWeekdays());
         subject1.setMathematicCode(subject.getMathematicCode());
         subject1.setModifiedDate(new Date());
-        return mongoTemplate.save(subject1);
+        mongoTemplate.save(subject1);
+        message += "Sửa thành công!";
+        return message;
     }
 
     @Override

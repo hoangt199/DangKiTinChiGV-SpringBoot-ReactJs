@@ -9,7 +9,7 @@ public interface SubjectService {
 
     List<Subject> getAllSubject();
 
-    Subject updateSubject(Subject subject, String id);
+    String updateSubject(Subject subject, String id);
 
     void deleteSubject(String id);
 

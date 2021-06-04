@@ -73,7 +73,7 @@ public class SubjectServiceImpl implements SubjectService {
     }
 
     @Override
-    public Subject updateSubject(Subject subject, String id) {
+    public String updateSubject(Subject subject, String id) {
         return subjectRepository.updateSubject(subject,id);
     }
 

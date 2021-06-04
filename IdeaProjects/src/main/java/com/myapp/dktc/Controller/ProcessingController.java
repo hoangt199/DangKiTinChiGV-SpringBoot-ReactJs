@@ -86,14 +86,15 @@ public class ProcessingController {
     @PutMapping("/update-subject/{id}")
 
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Subject> updateSubject(@PathVariable String id,@RequestBody Subject subject){
-        return ResponseEntity.ok(subjectService.updateSubject(subject,id));
+    public String updateSubject(@PathVariable String id,@RequestBody Subject subject){
+        String message = subjectService.updateSubject(subject, id);
+        return message;
     }
 
     @DeleteMapping("/delete-subject/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<String> delete(@PathVariable String id){
-        String message = "Delete Subject Successed !";
+        String message = "Xóa môn học thành công !";
         subjectService.deleteSubject(id);
         return ResponseEntity.ok(message);
     }
