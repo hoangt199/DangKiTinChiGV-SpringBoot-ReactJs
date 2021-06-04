@@ -65,8 +65,9 @@ const Login = (props) => {
     }
   };
   const onForgot = ()=>{
-    message.warning("Xóa thất bại!")
-    window.location.reload();
+    return(
+      message.warn("Chức năng chưa được phát triển")
+    )
   }
   return (
     <div className="col-md-12">
@@ -105,7 +106,7 @@ const Login = (props) => {
           </div>
           <div   style = {{marginBottom : "5px" ,marginTop : "5px"}}>
             <Button 
-            onClick = {onForgot}
+            onClick = {() => onForgot()}
             style={{textDecoration : "undeline" ,marginTop : "5px",marginBottom : "15px" , color : "black"}}>Bạn quên mật khẩu?</Button>
           </div>
           <div className="form-group">

@@ -85,7 +85,7 @@ export default class addSubject extends Component {
           this.setState({
             submitted:true
           })
-          // message.success("Tạo môn học mới thành công!")
+          message.info(res.data)
       });
       }
    
@@ -139,8 +139,8 @@ export default class addSubject extends Component {
       
       <div className="submit-form">
         {this.state.submitted ? (
-          message.success("Thêm mới môn học thành công!"),
-          this.props.history.push("/add-subject/mon-hoc")
+          {/* message.success("Thêm mới môn học thành công!"), */}
+          ,this.props.history.push("/add-subject/mon-hoc")
         ) : (
           
           <div className = "content">

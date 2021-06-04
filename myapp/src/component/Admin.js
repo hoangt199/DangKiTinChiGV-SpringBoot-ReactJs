@@ -32,12 +32,12 @@ const BoardAdmin = () => {
           <div className="navbar-nav mr-auto">
             <li className="nav-item">
               <Link to={"/add-subject/mon-hoc"} className="nav-link">
-                  Danh sách môn học
+                  Danh sách lớp học phần
               </Link>
             </li>
             <li className="nav-item">
               <Link to={"/add-subject/add"} className="nav-link">
-                    Thêm môn mới
+                    Thêm nhóm lớp mới
               </Link>
             </li>
           </div>

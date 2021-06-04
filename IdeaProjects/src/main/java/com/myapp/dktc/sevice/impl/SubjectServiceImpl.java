@@ -19,36 +19,44 @@ public class SubjectServiceImpl implements SubjectService {
 
     @Override
     public String createSubject(Subject subject) throws Exception {
-        String message = "Tạo môn học thành công";
+        String message = "";
         boolean created = true;
         List<Subject> listAllSubject = subjectRepository.findAllSubject();
-        if (listAllSubject == null){
-            message = "Không có môn học nào được tạo !";
-            created = false;
-        }else {
-            for (Subject subject1: listAllSubject) {
-                if(subject.getNameSubject() !=null && subject1.getNameSubject()!=null){
-                    if(subject.getNameSubject().equals(subject1.getNameSubject())){
-                        if(subject.getWeekdays().equals(subject1.getWeekdays())){
-                            if (subject.getRoom().equals(subject1.getRoom())){
-                                if (subject.getMathematicCode().equals(subject1.getMathematicCode())){
-                                    created = false;
-                                    message = "Môn học đã được tạo";
-                                }
-                                    message = "Phòng đã có môn học khác đăng kí!";
-                                    created =false;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-       if (created = true){
+           if(listAllSubject!=null){
+               for (Subject subject1: listAllSubject) {
+                   if(subject.getNameSubject() !=null && subject1.getNameSubject()!=null){
+                       if(subject.getNameSubject().equals(subject1.getNameSubject())){
+                           if(subject.getWeekdays().equals(subject1.getWeekdays())){
+                               if (subject.getRoom().equals(subject1.getRoom())){
+                                   if (subject.getMathematicCode().equals(subject1.getMathematicCode())){
+                                       created = false;
+                                       message += "Môn học đã được tạo trước đó" +"\n"+ " Môn học không được tạo!";
+                                   }else{
+                                       message += "Phòng đã có môn học khác đăng kí!"+"\n"+"Môn học không được tạo!";
+                                       created =false;
+                                   }
+                               }
+                           }
+                       }else{
+                           if(subject.getWeekdays().equals(subject1.getWeekdays())){
+                               if(subject.getRoom().equals(subject1.getRoom())){
+                                   if(subject.getMathematicCode().equals(subject1.getMathematicCode())){
+                                       message += "Trùng thời gian với lớp học phần khác" +"\n"+ " Môn học không được tạo!";
+                                       created = false;
+                                   }
+                               }
+                           }
+                       }
+                   }
+               }
+           }
+       if (created == true){
            Date date = new Date();
            subject.setModifiedDate(date);
            subjectRepository.save(subject);
-           message = "Tạo môn học thành công";
+           message += "Tạo môn học thành công";
        }
+        System.out.println("=+" +message);
         return message;
     }
 
@@ -61,7 +69,6 @@ public class SubjectServiceImpl implements SubjectService {
         if (list !=null){
             list.sort((o1, o2) -> o2.getModifiedDate().compareTo(o1.getModifiedDate()));
         }
-
         return list;
     }
 
