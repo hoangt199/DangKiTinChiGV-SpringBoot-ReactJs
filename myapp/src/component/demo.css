@@ -1,0 +1,95 @@
+.container{
+    background-color: rgb(221, 221, 221);
+}
+.ant-layout{
+    margin-top: 20px;
+}
+body{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+  
+}
+/* @page {
+    size: 21cm 29.7cm;
+    margin: 30mm 45mm 30mm 45mm;
+     /* change the margins as you want them to be. */
+/* } */ */
+/* div.chapter, div.appendix {
+    page-break-after: always;
+} */
+.head-page{
+    width: 100%;
+}
+.header{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
+.logo{
+    width: 250px;
+    height: 70px;
+    background:url('../image/logo.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+.title{
+    font-size: 20px;
+    font-weight: 500;
+    padding-top:30px
+}
+.content-inside{
+    width: 82.25%;
+}
+fieldset{
+    border:2px solid black !important;
+    margin-left: 3px;
+}
+legend{
+    width: 26% !important;
+    margin-left: 10px !important;
+    padding-left: 5px !important;
+    text-decoration: underline;
+
+}
+.tblInfo{
+    width: 90%;
+    margin:0 auto;
+    margin-bottom: 10px;
+}
+.qrCode{
+    width: 150px;
+    height: 150px;
+    margin-left: 20px;
+    background: url('../image/qr.png');
+    background-position: center;
+    background-size: contain;
+    margin-top: 15px;
+}
+.left{
+    float: left;
+}
+.pt-20{
+    padding-top: 20px !important;
+}
+.mt-15{
+    padding-top: 50px;
+}
+.mb-20{
+    margin-bottom: 20px;
+}
+.content-Approve{
+    width: 100%;
+}
+.field-approve{
+    width: 100%;
+
+}
+.legend-approve{
+    width: 18% !important;
+}
+table {
+
+    width: 80%;
+    align-items: center;
+}
