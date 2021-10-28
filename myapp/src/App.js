@@ -4,7 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
 import AuthService from "./service/auth.service";
-
+import demo  from "./component/demo";
 import Login from "./component/Login";
 import Register from "./component/Register";
 import Home from "./component/Home";
@@ -64,7 +64,11 @@ const App = () => {
               </Link>
             </li>
           )}
-
+          <li className="nav-item">
+                <Link to={"/demo"} className="nav-link">
+                            Print to Sign Contract
+                  </Link>
+            </li>
           {currentUser && (
             <li className="nav-item">
               <Link to={"/dang-ki-lich-day"} className="nav-link">
@@ -112,6 +116,7 @@ const App = () => {
           <Route path="/dang-ki-lich-day" component={User} />
           <Route path="/mod" component={Moderator} />
           <Route path="/add-subject" component={Admin} />
+          <Route path="/demo" component={demo} />
         </Switch>
       </div>
     </div>
