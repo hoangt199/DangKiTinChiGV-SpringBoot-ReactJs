@@ -18,26 +18,29 @@ import java.util.Date;
 @Getter
 @Setter
 @NotNull
-public class Subject {
+public class Tour {
     @Id
     @JsonProperty("id")
     private String id;
 
-    @JsonProperty("name_subject")
+    @JsonProperty("title")
     @NotBlank
-    private String nameSubject;
+    private String title;
 
-    @JsonProperty("specialized")
-    private String specialized;
+    @JsonProperty("urlImage")
+    private String urlImage;
 
-    @JsonProperty("room")
-    private String room;
+    @JsonProperty("description")
+    private String description;
 
-    @JsonProperty("weekdays")
-    private String weekdays;
+    @JsonProperty("price")
+    private String price;
 
-    @JsonProperty("mathematics_code") //kíp học
-    private String mathematicCode;
+    @JsonProperty("startTime")
+    private String startTime;
+
+    @JsonProperty("endTime")
+    private String endTime;
 
     @JsonProperty("last_modified_date")
     private Date modifiedDate;

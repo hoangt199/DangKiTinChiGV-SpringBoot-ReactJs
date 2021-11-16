@@ -34,7 +34,7 @@ public class User {
     private String password;
 
     @DBRef
-    private Set<Role> roles = new HashSet<>();
+    private Set<Roles> roles = new HashSet<>();
 
     public User() {
     }
@@ -77,11 +77,11 @@ public class User {
         this.password = password;
     }
 
-    public Set<Role> getRoles() {
+    public Set<Roles> getRoles() {
         return roles;
     }
 
-    public void setRoles(Set<Role> roles) {
+    public void setRoles(Set<Roles> roles) {
         this.roles = roles;
     }
 }

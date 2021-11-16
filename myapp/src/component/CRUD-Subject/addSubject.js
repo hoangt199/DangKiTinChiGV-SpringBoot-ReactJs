@@ -1,4 +1,4 @@
-import { Button, Input, Select ,message,Descriptions} from "antd";
+import { Button, Input, Select ,message,Descriptions,Space,InputNumber} from "antd";
 import '../CRUD-Subject/stylee/addSubject.css'
 import userSevice from "../../../src/service/user.service";
 import React, { Component } from "react";
@@ -33,21 +33,24 @@ export default class addSubject extends Component {
   constructor(props) {
     
     super(props);
-    this.onChangeName = this.onChangeName.bind(this);
-    this.onChangeRoom = this.onChangeRoom.bind(this);
-    this.onChangeCN = this.onChangeCN.bind(this);
-    this.onChangeDayofWeek = this.onChangeDayofWeek.bind(this);
-    this.onChangeKip = this.onChangeKip.bind(this);
-    this.saveSubject = this.saveSubject.bind(this);
+    // this.onChangeName = this.onChangeName.bind(this);
+    // this.onChangeRoom = this.onChangeRoom.bind(this);
+    // this.onChangeCN = this.onChangeCN.bind(this);
+    // this.onChangeDayofWeek = this.onChangeDayofWeek.bind(this);
+    // this.onChangeKip = this.onChangeKip.bind(this);
+    // this.saveSubject = this.saveSubject.bind(this);
     this.state = {
       id :  this.props.match.params.id,
-      nameSub : "",
-      specialized : "",
-      room : "",
-      mathematicCode : "",
-      weekdays : "",
+      idTour: null,
+      nameTour : "",
+      nameEmployee : "",
+      idCustomer : null,
+      nameCustomer : "",
+      numCustomer : "",
+      priceTicket : "",
+      totalPrice : this.statepriceTicket * this.statenumCustomer,
       submitted : false,
-      subject : []
+      // subject : []
     };
   }
    simpleStringify (object){
@@ -68,20 +71,30 @@ export default class addSubject extends Component {
 };
   saveSubject(e){
     
-      let newSubject = {
-        name_subject : this.state.nameSub,
-        specialized : this.state.specialized,
-        room : this.state.room,
-        weekdays : this.state.weekdays,
-        mathematics_code : this.state.mathematicCode
+      let newTicket = {
+        idTour : this.state.idTour,
+        nameTour : this.state.nameTour,
+        nameEmployee : this.state.nameEmployee,
+        nameCustomer : this.state.nameCustomer,
+        idCustomer : this.state.idCustomer,
+        numCustomer : this.state.numCustomer,
+        priceTicket : this.state.priceTicket,
+        totalPrice : this.state.totalPrice
       }
-      if(newSubject.name_subject.length == 0 || newSubject.specialized.length == 0 || newSubject.weekdays.length==0 || newSubject.mathematics_code.length == 0 || newSubject.room.length == 0){
+      if(newTicket.id == null 
+        || newTicket.idTour.length == 0 
+        || newTicket.nameTour.length==0 
+        || newTicket.priceTicket.length == 0 
+        || newTicket.nameCustomer.length == 0 
+        || newTicket.nameEmployee.length == 0 
+        || newTicket.priceTicket <= 0 
+        || newTicket.numCustomer <= 0){
         this.setState({
           submitted : false
         })
         message.warning("Không được để trống các trường!")
       }else{
-        userSevice.create(newSubject).then( res =>{
+        userSevice.create(newTicket).then( res =>{
           this.setState({
             submitted:true
           })
@@ -90,39 +103,39 @@ export default class addSubject extends Component {
       }
    
   }
-  onChangeRoom(value) {
-    console.log(`selected ${value}`);
-    this.setState({
-      room  : value
-    });
-  }
-   onChangeName(e) {
-    console.log(`selected ${e.target.value}`);
-    this.setState({
-      nameSub  : e.target.value
-    });
-  }
+//   onChangeRoom(value) {
+//     console.log(`selected ${value}`);
+//     this.setState({
+//       room  : value
+//     });
+//   }
+//    onChangeName(e) {
+//     console.log(`selected ${e.target.value}`);
+//     this.setState({
+//       nameSub  : e.target.value
+//     });
+//   }
   
- onChangeDayofWeek(value) {
-  console.log(`selected ${ value}`);
-  this.setState({
-    weekdays  : value
-  });
-}
+//  onChangeDayofWeek(value) {
+//   console.log(`selected ${ value}`);
+//   this.setState({
+//     weekdays  : value
+//   });
+// }
 
- onChangeKip(value) {
-  console.log(`selected ${ value}`);
-  this.setState({
-    mathematicCode  :  value
-  });
-}
+//  onChangeKip(value) {
+//   console.log(`selected ${ value}`);
+//   this.setState({
+//     mathematicCode  :  value
+//   });
+// }
 
- onChangeCN(value) {
-  console.log(`selected ${ value}`)
-  this.setState({
-    specialized  :  value
-  });
-}
+//  onChangeCN(value) {
+//   console.log(`selected ${ value}`)
+//   this.setState({
+//     specialized  :  value
+//   });
+// }
 
   // onHandleChange = (event) =>{
   //   var target = event.target;
@@ -133,7 +146,12 @@ export default class addSubject extends Component {
   //       [ten] : giatri
   //   });
   // }
- 
+  onChangeNumberCustomer(event,value) {
+      console.log(value)
+      // this.setState({
+      //   numCustomer : value
+      // })
+  }
   render() {
     return (
       
@@ -145,122 +163,111 @@ export default class addSubject extends Component {
           
           <div className = "content">
             
-          <h1 style ={{textAlign : "center"}}>Thêm môn học mới</h1>
+          <h1 style ={{textAlign : "center"}}>Tạo Vé</h1>
                 <div className="row">
                 <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6"   style ={{border : "1px dashed grey",borderRadius:"5px",padding : "20px 20px 20px 20px" }}>
                 <form action="" method="POST" role="form" >
                     <div className="form-group">
-                        <label for="">Tên môn học</label>
+                        <label for="">Id khách hàng</label>
+                        <Input type="text" 
+                        className="form-control"
+                        name= "idCustomer" 
+                        value = {this.state.idCustomer}
+                        disabled  = {true}
+                        // onChange = {this.onChangeName}
+                          style = {{borderRadius : "5px"}}
+                          validations={[required]}
+                        />
+                        <label for="">Tên khách hàng</label>
                         <Input type="text" 
                         className="form-control"
                         name= "nameSub" 
                         value = {this.state.nameSub}
-                        placeholder="Tên môn học"
-                        onChange = {this.onChangeName}
+                        disabled = {true}
+                        // onChange = {this.onChangeName}
                           style = {{borderRadius : "5px"}}
                           validations={[required]}
                         />
                     </div>
                     <div className="form-group">
-                        <label for="">Chuyên Ngành</label>
+                        <label for="">Tour</label>
                         <Select
                             showSearch
                             style={{ width: "100%" }}
-                            placeholder="Chọn chuyên ngành"
+                            placeholder="Chọn Tour"
                             optionFilterProp="children"
-                            onChange={this.onChangeCN}
+                            // onChange={this.onChangeCN}
                             onFocus={onFocus}
                             onBlur={onBlur}
                             onSearch={onSearch}
-                            name = "specialized"
-                            value = {this.state.specialized}
+                            name = "nameTour"
+                            value = {this.state.nameTour}
                             filterOption={(input, option) =>
                               option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
                             }
                             validations={[required]}
                           >
-                            <Option value="CNPM">CNPM</Option>
-                            <Option value="HTTT">HTTT</Option>
+                            <Option value="Tour Hà Nội">Tour Hà Nội</Option>
+                            <Option value="Tour Tp.HCM">Tour Tp.HCM</Option>
                           </Select>
                     </div>
                     <div className="form-group">
-                        <label for="">Phòng</label>
+                        <label for="">Nhân viên phụ trách</label>
                         <Select
                             showSearch
                             style={{ width: "100%" }}
-                            placeholder="Chọn phòng học"
+                            placeholder="Chọn nhân viên phụ trách"
                             optionFilterProp="children"
-                            name = "room"
-                            onChange={this.onChangeRoom}
+                            name = "nameEmployee"
+                            // onChange={this.onChangeRoom}
                             onFocus={onFocus}
                             onBlur={onBlur}
                             onSearch={onSearch}
-                            value = {this.state.room}
+                            value = {this.state.nameEmployee}
                             filterOption={(input, option) =>
                               option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
                             }
                             validations={[required]}
                           >
-                            <Option value="101 - A2">101 - A2</Option>
-                            <Option value="201 - A2">201 - A2</Option>
-                            <Option value="301 - A2">301 - A2</Option>
-                            <Option value="401 - A2">401 - A2</Option>
-                            <Option value="501 - A2">501 - A2</Option>
-                            <Option value="601 - A2">601 - A2</Option>
-                            <Option value="701 - A2">701 - A2</Option>
+                            <Option value="">Trần Văn A</Option>
+                            <Option value="">Trần Văn B</Option>
+                            <Option value="">Trần Văn C</Option>
+                            <Option value="">Trần Văn D</Option>
+                            <Option value="">Trần Văn E</Option>
+                            <Option value="">Trần Văn F</Option>
+                            <Option value="">Trần Văn G</Option>
                           </Select>
                     </div>
+                   <div className="form-group">
+                   <label>Số lượng khách</label>
+                    <Space>
+                    <InputNumber name="numCustomer" size="large" min={1} max={100000} defaultValue={3} onChange={this.onChangeNumberCustomer} />
+                  </Space>
+                   </div>
                     <div className="form-group">
-                        <label for="">Thứ</label>
-                        <Select
-                            showSearch
-                            style={{ width: "100%" }}
-                            placeholder="Chọn thứ trong tuần"
-                            optionFilterProp="children"
-                            name = "weekdays"
-                            onChange={this.onChangeDayofWeek}
-                            onFocus={onFocus}
-                            onBlur={onBlur}
-                            onSearch={onSearchDayOfWeek}
-                            value = {this.state.weekdays}
-                            filterOption={(input, option) =>
-                              option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-                            }
-                            validations={[required]}
-                          >
-                            <Option value="Thứ 2">Thứ 2</Option>
-                            <Option value="Thứ 3">Thứ 3</Option>
-                            <Option value="Thứ 4">Thứ 4</Option>
-                            <Option value="Thứ 5">Thứ 5</Option>
-                            <Option value="Thứ 6">Thứ 6</Option>
-                            <Option value="Thứ 7">Thứ 7</Option>
-                          </Select>
+                        <label for="">Giá vé/Người</label>
+                        <Input type="text" 
+                        className="form-control"
+                        name= "priceTicket" 
+                        value = {this.state.priceTicket}
+                        disabled  = {true}
+                        // onChange = {this.onChangeName}
+                          style = {{borderRadius : "5px"}}
+                          validations={[required]}
+                        />
                     </div>
                     <div className="form-group">
-                        <label for="">Kíp học</label>
-                        <Select
-                        showSearch
-                            style={{ width: "100%" }}
-                            placeholder="Chọn kíp dạy"
-                            optionFilterProp="children"
-                            name = "mathematicCode"
-                            onChange={this.onChangeKip}
-                            onFocus={onFocus}
-                            onBlur={onBlur}
-                            onSearch={onSearchDayOfWeek}
-                            value = {this.state.mathematicCode}
-                            filterOption={(input, option) =>
-                              option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-                            }
-                            required
-                            validations={[required]}>
-                            <Option value="7h - 8h50">7h - 8h50</Option>
-                            <Option value="9h - 10h50">9h - 10h50</Option>
-                            <Option value="12h - 13h50">12h - 13h50</Option>
-                            <Option value="14h - 15h50">14h - 15h50</Option>
-                            <Option value="16h - 17h50">16h - 17h50</Option>
-                            <Option value="18h - 19h50">18h - 19h50</Option>
-                        </Select>
+                        <label for="">Tổng tiền</label>
+                        <Input type="text" 
+                        className="form-control"
+                        name= "totalPrice" 
+                        value = {this.state.totalPrice}
+                        disabled  = {true}
+                        // onChange = {this.onChangeName}
+                          style = {{borderRadius : "5px"}}
+                          validations={[required]}
+                          placeholder = "Tổng tiền"
+                        />
                     </div>
                     <Button onClick={(e) => this.saveSubject(e)} type="primary">
                     Submit

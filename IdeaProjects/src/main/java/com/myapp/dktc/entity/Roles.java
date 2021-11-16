@@ -3,18 +3,18 @@ package com.myapp.dktc.entity;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "roles")
-public class Role {
+@Document(collection = "Roles")
+public class Roles {
     @Id
     private String id;
 
     private ERole name;
 
-    public Role() {
+    public Roles() {
 
     }
 
-    public Role(ERole name) {
+    public Roles(ERole name) {
         this.name = name;
     }
 

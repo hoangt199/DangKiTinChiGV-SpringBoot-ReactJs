@@ -5,7 +5,7 @@ import com.myapp.dktc.Request.SignupRequest;
 import com.myapp.dktc.Response.JwtResponse;
 import com.myapp.dktc.Response.MessageResponse;
 import com.myapp.dktc.entity.ERole;
-import com.myapp.dktc.entity.Role;
+import com.myapp.dktc.entity.Roles;
 import com.myapp.dktc.entity.User;
 import com.myapp.dktc.responsitory.RoleRepository;
 import com.myapp.dktc.responsitory.UserRepository;
@@ -85,29 +85,29 @@ public class AuthController {
                 encoder.encode(signUpRequest.getPassword()));
 
         Set<String> strRoles = signUpRequest.getRoles();
-        Set<Role> roles = new HashSet<>();
+        Set<Roles> roles = new HashSet<>();
 
         if (strRoles == null) {
-            Role userRole = roleRepository.findByName(ERole.ROLE_USER)
+            Roles userRole = roleRepository.findByName(ERole.ROLE_USER)
                     .orElseThrow(() -> new RuntimeException("Error: Role không tồn tại."));
             roles.add(userRole);
         } else {
             strRoles.forEach(role -> {
                 switch (role) {
                     case "admin":
-                        Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
+                        Roles adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
                                 .orElseThrow(() -> new RuntimeException("Error: Role không tồn tại."));
                         roles.add(adminRole);
 
                         break;
                     case "mod":
-                        Role modRole = roleRepository.findByName(ERole.ROLE_MODERATOR)
+                        Roles modRole = roleRepository.findByName(ERole.ROLE_MODERATOR)
                                 .orElseThrow(() -> new RuntimeException("Error: Role không tồn tại."));
                         roles.add(modRole);
 
                         break;
                     default:
-                        Role userRole = roleRepository.findByName(ERole.ROLE_USER)
+                        Roles userRole = roleRepository.findByName(ERole.ROLE_USER)
                                 .orElseThrow(() -> new RuntimeException("Error: Role không tồn tại."));
                         roles.add(userRole);
                 }
